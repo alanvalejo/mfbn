@@ -1,0 +1,7 @@
+__pycache__
+*.pyc
+output
+log
+.idea
+models372
+*.so

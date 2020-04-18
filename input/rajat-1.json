@@ -1,0 +1,58 @@
+{
+	"vertices": [
+		6765
+		, 6765
+	]
+	, "reduction_factor": [
+		1.0
+		, 1.0
+	]
+	, "max_levels": [
+		null
+		, null
+	]
+	, "global_min_vertices": [
+		3000
+		, 3000
+	]
+	, "matching": [
+		"mlpb"
+		, "mlpb"
+	]
+	, "similarity": [
+		"weighted_common_neighbors"
+		, "weighted_common_neighbors"
+	]
+    , "seed_priority": [
+        "degree"
+        , "degree"
+    ]
+	, "upper_bound": [
+		0.2
+		, 0.2
+	]
+	, "itr": [
+		10
+		, 10
+	]
+	, "tolerance": [
+		0.0001
+		, 0.0001
+	]
+	, "output_directory": "output"
+	, "output": "rajat-1"
+	, "input": "input/rajat.ncol"
+	, "save_conf": true
+	, "save_ncol": true
+	, "save_gml": false
+	, "save_source": false
+    , "save_membership": true
+	, "save_predecessor": false
+	, "save_successor": false
+	, "save_timing": false
+	, "save_hierarchy": true
+	, "save_weight": true
+	, "unique_key": false
+	, "show_timing": true
+	, "show_conf": false
+}

@@ -1,0 +1,17 @@
+# Ignore everything
+*
+
+# But not these files...
+!.gitignore
+!moreno.ncol
+!moreno-1.ncol
+!moreno-2.ncol
+!moreno-3.ncol
+!n-reactome.ncol
+!n-reactome-1.json
+!n-reactome-2.json
+!n-reactome-3.json
+!rajat.ncol
+!rajat-1.json
+!rajat-2.json
+!rajat-3.json
