@@ -189,6 +189,28 @@ The result is showed below, Figures 3b, 3c and 3d.
 | ------------------ | ---------------------- | ---------------------- | ---------------------- |
 | ![](img/rajat.png) | ![](img/rajat-1-1.png) | ![](img/rajat-2-2.png) | ![](img/rajat-3-2.png) |
 
+**Timing**
+
+To track the execution time of the algorithms you can use the fallowing parameters:
+
+```javascript
+{
+    "show_timing": true
+	, "save_timing_csv": false
+	, "save_timing_json": false
+}
+```
+
+E.g., `show_timing` track (and show in bash) the execution time of each algorithm phase: 
+
+    $ python coarsening.py -cnf input/n-reactome-1.json
+
+           Snippet       Time [m]       Time [s]
+    Pre-processing            0.0         0.0428
+              Load            0.0         0.2623
+        Coarsening            0.0         4.9760
+              Save            0.0         0.1249
+
 **Instal**
 
 > Pip
