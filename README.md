@@ -2,7 +2,7 @@
 Warning
 -------
 The original implementations (i.e. paper versions [1,2,3,4]) are deprecated.
-There may be divergences between this version and the original algorithm.
+There may be divergences between this version and the original algorithms.
 If you looking for the original version used in the paper don't hesitate to contact the authors.
 
 This software is a new version, more robust and fast.
@@ -265,7 +265,7 @@ http://www.gnu.org/licenses/.
 **References**
 
 > [1] Valejo, Alan and Faleiros, T. P. and Oliveira, Maria C. F. and Lopes, A. A., A coarsening method for bipartite
->networks via weight-constrained label propagation, in ACM Computing Surveys, 2019, 
+>networks via weight-constrained label propagation, in Knowledge-based systems, p. 105678, vol. 195, 2019, 
 >doi: https://doi.org/10.1016/j.knosys.2020.105678
 >
 > [2] Valejo, Alan and Oliveira, Maria C. F. and Filho, Geraldo P. R. and Lopes, A. A., Multilevel approach for 
@@ -286,11 +286,13 @@ http://www.gnu.org/licenses/.
 >multilevel method in complex networks, in ACM Computing Surveys, accepted paper, 2019
 
 ~~~~~{.bib}
-@article{valejo2019critical,
-    author = {Valejo, Alan and Faleiros, T. P. and Oliveira, Maria C. F. and Lopes, A. A.},
+@article{valejo2020coarsening,
+    author = {Valejo, Alan and Faleiros, T. P. and Oliveira, Maria C. R. F. and Lopes, A.},
     title = {A coarsening method for bipartite networks via weight-constrained label propagation},
-    journal = {ACM Computing Surveys},
-    year = {2019},
+    journal = {Knowledge-Based Systems},
+    year = {2020},
+    volume = {195},
+    pages = {105678},
 }
 @article{valejo2018multilevel,
     author = {Valejo, Alan and Oliveira, Maria C. F. and Filho, Geraldo P. R. and Lopes, A. A.},
@@ -303,17 +305,14 @@ http://www.gnu.org/licenses/.
 @inproceedings{valejo2018community,
     author = {Valejo, Alan and Ferreira, V. and Oliveira, Maria C. F. and Lopes, A. A.},
     title = {Community detection in bipartite network: a modified coarsening approach},
-    booktitle = {International symposium on information management and big data (SIMBig), track on social network and 
-media analysis and mining (SNMAN). Part of the Communications in Computer and Information Science book 
-series (CCIS, volume 795)},
+    booktitle = {International symposium on information management and big data (SIMBig), track on social network and media analysis and mining (SNMAN). Part of the Communications in Computer and Information Science book series (CCIS, volume 795)},
     year = {2018},
     pages = {123--136},
 }
 @inproceedings{valejo2017one,
     author = {Valejo, Alan and Filho, Geraldo P. R. and Oliveira, Maria C. F. and Ferreira, V. and Lopes, A. A.},
     title = {One-mode projection-based multilevel approach for community detection in bipartite networks},
-    booktitle = {International symposium on information management and big data (SIMBig), track on social network and 
-media analysis and mining (SNMAN)},
+    booktitle = {International symposium on information management and big data (SIMBig), track on social network and media analysis and mining (SNMAN)},
     year = {2017},
     pages = {101-108},
 }
