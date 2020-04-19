@@ -262,9 +262,9 @@
 		, "help": "output date and time as unique_key"
 	},
 	"o": {
-		"long": "output_objects",
+		"long": "output_object",
 		"required": false,
-		"dest": "output_objects",
+		"dest": "output_object",
 		"action": "store_true",
 		"help": "return python objects dictionary and don't write files"
 	}

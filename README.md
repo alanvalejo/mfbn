@@ -41,7 +41,7 @@ MFBN may operate in two modes: 1. using explicit command line parameters (or opt
 | -dir --output_directory    | str [DIR]         | '.'            | directory of output file                                    | All                 |
 | -out --output              | str [FILE]        | 'out'          | filename                                                    | All                 |
 | -cnf --conf                | str [FILE]        | None           | Input parameters in .json format                            | All                 |
-| -o --output_objects        | boolean           | False          | return python objects dictionary and don't write files      | All                 |
+| -o --output_object         | boolean           | False          | return python objects dictionary and don't write files      | All                 |
 | -v --vertices              | int array [L1,L2] | None           | number of vertices for each layer                           | All                 |
 | -r --reduction_factor      | int array [L1,L2] | [0.5, 0.5]     | reduction factor for each layer                             | All                 |
 | -m --max_levels            | int array [L1,L2] | [3, 3]         | max levels for each layer                                   | OPM, RGMB and GMB   |
@@ -261,6 +261,8 @@ details. You should have received a copy of the GNU General Public License along
 http://www.gnu.org/licenses/.
 
 **To-do list**
+
+* Implements the output of the objects
 
 **References**
 
