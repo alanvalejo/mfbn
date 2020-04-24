@@ -34,42 +34,42 @@ MFBN may operate in two modes: 1. using explicit command line parameters (or opt
 
 **Command line parameters**
 
-    $ python coarsening.py [options]
+    $ python mfbn.py [options]
     
-| Option                     | Domain            | Default        | Description                                                 | Algorithms          |
-| -------------------------- | ----------------- | -------------- | ----------------------------------------------------------- | ------------------- |
-| -dir --output_directory    | str [DIR]         | '.'            | directory of output file                                    | All                 |
-| -out --output              | str [FILE]        | 'out'          | filename                                                    | All                 |
-| -cnf --conf                | str [FILE]        | None           | Input parameters in .json format                            | All                 |
-| -o --output_object         | boolean           | False          | return python objects dictionary and don't write files      | All                 |
-| -v --vertices              | int array [L1,L2] | None           | number of vertices for each layer                           | All                 |
-| -r --reduction_factor      | int array [L1,L2] | [0.5, 0.5]     | reduction factor for each layer                             | All                 |
-| -m --max_levels            | int array [L1,L2] | [3, 3]         | max levels for each layer                                   | OPM, RGMB and GMB   |
-| -gmv --global_min_vertices | int array [L1,L2] | [100, 100]     | minimum number of vertices for each layer in the last level | MLPb                |
-| -t --tolerance             | int array [L1,L2] | [0.1]          | tolerance in for each layer                                 | MLPb                |
-| -i --itr                   | int array [L1,L2] | [10, 10]       | number of iterations for each layer                         | MLPb                |
-| -ub --upper_bound          | int array [L1,L2] | [0.2, 0.2]     | upper bound for each layer                                  | MLPb                |
-| -c --matching              | str array [L1,L2] | ["gmb", "gmb"] | matching method for each layer                              | Algorithm selection |
-| -s --similarity            | str array [L1,L2] | ["jaccard", "jaccard"] | similarity measure for each layer                   | All                 |
-| -sd --seed_priority        | str array [L1,L2] | ["degree", "degree"] | seed priority to start the algorithms                 | All                 |
-| -scnf --save_conf          | boolean           | false          | save config file                                            | All                 |
-| -sgml --save_gml           | boolean           | false          | save gml file                                               | All                 |
-| -sn --save_ncol            | boolean           | false          | save ncol file                                              | All                 |
-| -ssrc --save_source        | boolean           | false          | save source file                                            | All                 |
-| -smbs --save_membership    | boolean           | false          | save membership file                                        | All                 |
-| -swgh --save_weight        | boolean           | false          | save weight file                                            | All                 |
-| -sprd --save_predecessor   | boolean           | false          | save predecessor file                                       | All                 |
-| -sscc --save_successor     | boolean           | false          | save successor file                                         | All                 |
-| -shrr --save_hierarchy     | boolean           | false          | save hierarchy of networks                                  | All                 |
-| -sc --show_conf            | boolean           | false          | show conf file                                              | All                 |
-| -st --show_timing          | boolean           | False          | show timing                                                 | All                 |
-| -tcsv --save_timing_csv    | boolean           | False          | save timing in csv                                          | All                 |
-| -tjson --save_timing_json  | boolean           | False          | save timing in json                                         | All                 |
-| --unique_key               | boolean           | False          | output date and time as unique_key                          | All                 |
+| Option                     | Domain            | Default                | Description                                                 | Algorithms          |
+| -------------------------- | ----------------- | ---------------------- | ----------------------------------------------------------- | ------------------- |
+| -dir --output_directory    | str [DIR]         | '.'                    | directory of output file                                    | All                 |
+| -out --output              | str [FILE]        | 'out'                  | filename                                                    | All                 |
+| -cnf --conf                | str [FILE]        | None                   | Input parameters in .json format                            | All                 |
+| -o --output_object         | boolean           | False                  | return python objects dictionary and don't write files      | All                 |
+| -v --vertices              | int array [L1,L2] | None                   | number of vertices for each layer                           | All                 |
+| -r --reduction_factor      | int array [L1,L2] | [0.5, 0.5]             | reduction factor for each layer                             | All                 |
+| -m --max_levels            | int array [L1,L2] | [3, 3]                 | max levels for each layer                                   | OPM, RGMB and GMB   |
+| -gmv --global_min_vertices | int array [L1,L2] | [100, 100]             | minimum number of vertices for each layer in the last level | MLPb                |
+| -t --tolerance             | int array [L1,L2] | [0.1]                  | tolerance in for each layer                                 | MLPb                |
+| -i --itr                   | int array [L1,L2] | [10, 10]               | number of iterations for each layer                         | MLPb                |
+| -ub --upper_bound          | int array [L1,L2] | [0.2, 0.2]             | upper bound for each layer                                  | MLPb                |
+| -c --matching              | str array [L1,L2] | ["gmb", "gmb"]         | matching method for each layer                              | Algorithm selection |
+| -s --similarity            | str array [L1,L2] | ["jaccard", "jaccard"] | similarity measure for each layer                           | All                 |
+| -sd --seed_priority        | str array [L1,L2] | ["degree", "degree"]   | seed priority to start the algorithms                       | All                 |
+| -scnf --save_conf          | boolean           | false                  | save config file                                            | All                 |
+| -sgml --save_gml           | boolean           | false                  | save gml file                                               | All                 |
+| -sn --save_ncol            | boolean           | false                  | save ncol file                                              | All                 |
+| -ssrc --save_source        | boolean           | false                  | save source file                                            | All                 |
+| -smbs --save_membership    | boolean           | false                  | save membership file                                        | All                 |
+| -swgh --save_weight        | boolean           | false                  | save weight file                                            | All                 |
+| -sprd --save_predecessor   | boolean           | false                  | save predecessor file                                       | All                 |
+| -sscc --save_successor     | boolean           | false                  | save successor file                                         | All                 |
+| -shrr --save_hierarchy     | boolean           | false                  | save hierarchy of networks                                  | All                 |
+| -sc --show_conf            | boolean           | false                  | show conf file                                              | All                 |
+| -st --show_timing          | boolean           | False                  | show timing                                                 | All                 |
+| -tcsv --save_timing_csv    | boolean           | False                  | save timing in csv                                          | All                 |
+| -tjson --save_timing_json  | boolean           | False                  | save timing in json                                         | All                 |
+| --unique_key               | boolean           | False                  | output date and time as unique_key                          | All                 |
 
 **JSON option**
 
-    $ python bnoc.py -cnf options.json
+    $ python mfbn.py -cnf options.json
 
 JSON format: Data is in name/value pairs, separated by commas, curly braces hold objects and square brackets hold arrays.
 
@@ -113,9 +113,9 @@ It is possible use different parameters algorithms in each layer, e.g.:
 
 ```javascript
 {
-    "reduction_factor": [0.3, 0.5]
-    , "matching": ["gmb", "rgmb"]
-    , "similarity": ["common_neighbors", "jaccard"]
+    "reduction_factor": [0.3, 0.5],
+    "matching": ["gmb", "rgmb"],
+    "similarity": ["common_neighbors", "jaccard"]
     ...
 }
 ```
@@ -125,7 +125,7 @@ It is possible use different parameters algorithms in each layer, e.g.:
 To help you visualize the networks generated by the coarsening process you can use the 
 [PyNetViewer](https://github.com/alanvalejo/pynetviewer) software. In the network images, line widths reflect the 
 corresponding edge weights; vertex widths depict the super-vertex weights. Bright red markers denote high-degree 
-vertices. Layout file is in the PyNetViewer repository.
+vertices.
 
 We tested 3 real networks: 1. Moreno Crime is a social network with scale-free behavior relating 754 crime suspects or 
 victims with 509 crimes (Figure 1a); 2. N-reactome is a biological network with modular topology with 8,788 proteins 
@@ -189,15 +189,24 @@ The result is showed below, Figures 3b, 3c and 3d.
 | ------------------ | ---------------------- | ---------------------- | ---------------------- |
 | ![](img/rajat.png) | ![](img/rajat-1-1.png) | ![](img/rajat-2-2.png) | ![](img/rajat-3-2.png) |
 
+MLPb algorithm can generate balanced and unbalanced using a upper bound parameter:
+
+| 4a) upper_bound=0.1             | 4b) upper_bound=0.8              |         
+| ------------------------------- | -------------------------------- |
+| ![](img/moreno-balanced-1.png)  | ![](img/moreno-unbalanced-1.png) |
+    
+
+    $ python coarsening.py -cnf input/rajat-1.json
+
 **Timing**
 
 To track the execution time of the algorithms you can use the fallowing parameters:
 
 ```javascript
 {
-    "show_timing": true
-	, "save_timing_csv": false
-	, "save_timing_json": false
+    "show_timing": true,
+    "save_timing_csv": false,
+    "save_timing_json": false
 }
 ```
 

@@ -39,6 +39,7 @@
 		0.0001
 		, 0.0001
 	]
+	, "threads": 2
 	, "output_directory": "output"
 	, "output": "n-reactome-3"
 	, "input": "input/n-reactome.ncol"
