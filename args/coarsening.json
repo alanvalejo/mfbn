@@ -40,6 +40,16 @@
 		, "default": null
 		, "help": "config file name"
 	}
+	, "thr": {
+		"long": "threads"
+		, "required": false
+		, "dest": "threads"
+		, "type": "int"
+		, "nargs": "+"
+		, "action": "store"
+		, "default": 1
+		, "help": "number of threads"
+	}
 	, "v": {
 		"long": "vertices"
 		, "dest": "vertices"
