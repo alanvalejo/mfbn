@@ -2,12 +2,9 @@
 # -*- coding: utf-8 -*-
 
 """
-Coarsening
+MFBN: Multilevel framework for bipartite networks
 
 Copyright (C) 2017 Alan Valejo <alanvalejo@gmail.com> All rights reserved
-
-In coarsening strategy a sequence (or hierarchy) of smaller networks is constructed from the original network, such
-that $|V_0| > |V_1| > ... > |V_N|$. Such a hierarchy represents the network on multiple scales.
 
 The original implementation (paper version) is deprecated. This software is a new version, more robust and fast.
 I.e., there may be divergences between this version and the original algorithm. If you looking for the original
@@ -96,7 +93,7 @@ def main():
 
         # Setup parse options command line
         current_path = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-        parser = args.setup_parser(current_path + '/args/coarsening.json')
+        parser = args.setup_parser(current_path + '/args/mfbn.json')
         options = parser.parse_args()
         args.update_json(options)
         args.check_output(options)

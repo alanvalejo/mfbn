@@ -3,4 +3,4 @@
 
 # But not these files...
 !.gitignore
-!coarsening.json
+!mfbn.json

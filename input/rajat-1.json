@@ -49,7 +49,8 @@
     , "save_membership": true
 	, "save_predecessor": false
 	, "save_successor": false
-	, "save_timing": false
+	, "save_timing_csv": true
+	, "save_timing_json": false
 	, "save_hierarchy": true
 	, "save_weight": true
 	, "unique_key": false
