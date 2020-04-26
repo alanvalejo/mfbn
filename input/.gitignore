@@ -4,9 +4,11 @@
 # But not these files...
 !.gitignore
 !moreno.ncol
-!moreno-1.ncol
-!moreno-2.ncol
-!moreno-3.ncol
+!moreno-1.json
+!moreno-2.json
+!moreno-3.json
+!moreno-balanced.json
+!moreno-unbalanced.json
 !n-reactome.ncol
 !n-reactome-1.json
 !n-reactome-2.json
