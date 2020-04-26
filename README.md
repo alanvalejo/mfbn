@@ -189,7 +189,7 @@ The result is showed below, Figures 3b, 3c and 3d.
 | ------------------ | ---------------------- | ---------------------- | ---------------------- |
 | ![](img/rajat.png) | ![](img/rajat-1-1.png) | ![](img/rajat-2-2.png) | ![](img/rajat-3-2.png) |
 
-MLPb algorithm can generate balanced and unbalanced super-vertices using a upper bound parameter:
+MLPb algorithm can generate balanced and unbalanced super-vertices using an upper bound parameter:
 
 | 4a) upper_bound=0.1             | 4b) upper_bound=0.8              |         
 | ------------------------------- | -------------------------------- |
