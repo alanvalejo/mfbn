@@ -1,275 +1,275 @@
 {
-	"descriptions": "Coarsening bipartite networks basead on neighborhood."
-	, "in": {
-		"long": "input"
-		, "dest": "input"
-		, "required": false
-		, "type": "str"
-		, "nargs": "?"
-		, "action": "store"
-		, "default": null
-		, "help": "bipartite Graph file name"
-	}
-	, "dir": {
-		"long": "output_directory"
-		, "dest": "output_directory"
-		, "required": false
-		, "type": "str"
-		, "nargs": "?"
-		, "action": "store"
-		, "default": null
-		, "help": "output directory name"
-	}
-	, "out": {
-		"long": "output"
-		, "dest": "output"
-		, "required": false
-		, "type": "str"
-		, "nargs": "?"
-		, "action": "store"
-		, "default": null
-		, "help": "output file name"
-	}
-	, "cnf": {
-		"long": "conf"
-		, "dest": "conf"
-		, "required": false
-		, "type": "str"
-		, "nargs": "?"
-		, "action": "store"
-		, "default": null
-		, "help": "config file name"
-	}
-	, "thr": {
-		"long": "threads"
-		, "required": false
-		, "dest": "threads"
-		, "type": "int"
-		, "nargs": "+"
-		, "action": "store"
-		, "default": 1
-		, "help": "number of threads"
-	}
-	, "v": {
-		"long": "vertices"
-		, "dest": "vertices"
-		, "required": false
-		, "type": "int"
-		, "nargs": "+"
-		, "action": "store"
-		, "default": null
-		, "help": "number of vertices for each layer"
-	}
-	, "r": {
-		"long": "reduction_factor"
-		, "dest": "reduction_factor"
-		, "required": false
-		, "type": "float"
-		, "nargs": "+"
-		, "action": "store"
-		, "default": [0.5, 0.5]
-		, "help": "reduction factor for each layer"
-	}
-	, "m": {
-		"long": "max_levels"
-		, "dest": "max_levels"
-		, "required": false
-		, "type": "int"
-		, "nargs": "+"
-		, "action": "store"
-		, "default": [3, 3]
-		, "help": "max levels for each layer"
-	}
-	, "gmv": {
-		"long": "global_min_vertices"
-		, "dest": "global_min_vertices"
-		, "required": false
-		, "type": "int"
-		, "nargs": "+"
-		, "action": "store"
-		, "default": [100, 100]
-		, "help": "minimum number of vertices for each layer in the last level"
-	}
-	, "t": {
-		"long": "tolerance"
-		, "dest": "tolerance"
-		, "required": false
-		, "type": "float"
-		, "nargs": "+"
-		, "action": "store"
-		, "default": [0.1, 0.1]
-		, "help": "tolerance"
-	}
-	, "i": {
-		"long": "itr"
-		, "dest": "itr"
-		, "required": false
-		, "type": "int"
-		, "nargs": "+"
-		, "action": "store"
-		, "default": [10, 10]
-		, "help": "number of iterations for each layer in the coarsening algorithm"
-	}
-	, "ub": {
-		"long": "upper_bound"
-		, "dest": "upper_bound"
-		, "required": false
-		, "type": "float"
-		, "nargs": "+"
-		, "action": "store"
-		, "default": [0.2, 0.2]
-		, "help": "upper bound for each layer"
-	}
-	, "c": {
-		"long": "matching"
-		, "dest": "matching"
-		, "required": false
-		, "type": "str"
-		, "nargs": "+"
-		, "action": "store"
-		, "default": ["gmb", "gmb"]
-		, "help": "matching method for each layer"
-	}
-	, "s": {
-		"long": "similarity"
-		, "dest": "similarity"
-		, "required": false
-		, "type": "str"
-		, "nargs": "+"
-		, "action": "store"
-		, "default": ["jaccard", "jaccard"]
-		, "help": "similarity measure for each layer"
-	}
-	, "rv": {
-		"long": "reverse"
-		, "dest": "reverse"
-		, "required": false
-		, "type": "str"
-		, "nargs": "+"
-		, "default": ["true", "true"]
-		, "help": "reverse order"
-	}
-	, "sd": {
-		"long": "seed_priority"
-		, "dest": "seed_priority"
-		, "required": false
-		, "type": "str"
-		, "nargs": "+"
-		, "action": "store"
-		, "default": ["degree", "degree"]
-		, "help": "seed priority"
-	}
-	, "scnf": {
-		"long": "save_conf"
-		, "dest": "save_conf"
-		, "required": false
-		, "action": "store_true"
-		, "default": false
-		, "help": "save config file"
-	}
-	, "sgml": {
-		"long": "save_gml"
-		, "dest": "save_gml"
-		, "required": false
-		, "action": "store_true"
-		, "default": false
-		, "help": "save gml file"
-	}
-	, "sn": {
-		"long": "save_ncol"
-		, "dest": "save_ncol"
-		, "required": false
-		, "action": "store_true"
-		, "default": false
-		, "help": "save ncol file"
-	}
-	, "ssrc": {
-		"long": "save_source"
-		, "dest": "save_source"
-		, "required": false
-		, "action": "store_true"
-		, "default": false
-		, "help": "save source file"
-	}
-	, "smbs": {
-		"long": "save_membership"
-		, "dest": "save_membership"
-		, "required": false
-		, "action": "store_true"
-		, "default": false
-		, "help": "save membership file"
-	}
-	, "swgh": {
-		"long": "save_weight"
-		, "dest": "save_weight"
-		, "required": false
-		, "action": "store_true"
-		, "default": false
-		, "help": "save weight file"
-	}
-	, "sprd": {
-		"long": "save_predecessor"
-		, "dest": "save_predecessor"
-		, "required": false
-		, "action": "store_true"
-		, "default": false
-		, "help": "save predecessor file"
-	}
-	, "sscc": {
-		"long": "save_successor"
-		, "dest": "save_successor"
-		, "required": false
-		, "action": "store_true"
-		, "default": false
-		, "help": "save successor file"
-	}
-	, "shrr": {
-		"long": "save_hierarchy"
-		, "dest": "save_hierarchy"
-		, "required": false
-		, "action": "store_true"
-		, "default": false
-		, "help": "save hierarchy of networks file"
-	}
-	, "sc": {
-		"long": "show_conf"
-		, "dest": "show_conf"
-		, "required": false
-		, "action": "store_true"
-		, "default": false
-		, "help": "show conf file"
-	}
-	, "st": {
-		"long": "show_timing"
-		, "dest": "show_timing"
-		, "required": false
-		, "action": "store_true"
-		, "default": false
-		, "help": "show timing"
-	}
-	, "tcsv": {
-		"long": "save_timing_csv"
-		, "dest": "save_timing_csv"
-		, "required": false
-		, "action": "store_true"
-		, "default": false
-		, "help": "save timing in csv"
-	}
-	, "tjson": {
-		"long": "save_timing_json"
-		, "dest": "save_timing_json"
-		, "required": false
-		, "action": "store_true"
-		, "default": false
-		, "help": "save timing in csv"
-	}
-	, "unq": {
-		"long": "unique_key"
-		, "dest": "unique_key"
-		, "required": false
-		, "action": "store_true"
-		, "default": false
-		, "help": "output date and time as unique_key"
+	"descriptions": "Coarsening bipartite networks basead on neighborhood.",
+		"in": {
+		"long": "input",
+		"dest": "input",
+		"required": false,
+		"type": "str",
+		"nargs": "?",
+		"action": "store",
+		"default": null,
+		"help": "bipartite Graph file name"
+	},
+	"dir": {
+		"long": "output_directory",
+		"dest": "output_directory",
+		"required": false,
+		"type": "str",
+		"nargs": "?",
+		"action": "store",
+		"default": null,
+		"help": "output directory name"
+	},
+	"out": {
+		"long": "output",
+		"dest": "output",
+		"required": false,
+		"type": "str",
+		"nargs": "?",
+		"action": "store",
+		"default": null,
+		"help": "output file name"
+	},
+	"cnf": {
+		"long": "conf",
+		"dest": "conf",
+		"required": false,
+		"type": "str",
+		"nargs": "?",
+		"action": "store",
+		"default": null,
+		"help": "config file name"
+	},
+	"thr": {
+		"long": "threads",
+		"required": false,
+		"dest": "threads",
+		"type": "int",
+		"nargs": "+",
+		"action": "store",
+		"default": 1,
+		"help": "number of threads"
+	},
+	"v": {
+		"long": "vertices",
+		"dest": "vertices",
+		"required": false,
+		"type": "int",
+		"nargs": "+",
+		"action": "store",
+		"default": null,
+		"help": "number of vertices for each layer"
+	},
+	"r": {
+		"long": "reduction_factor",
+		"dest": "reduction_factor",
+		"required": false,
+		"type": "float",
+		"nargs": "+",
+		"action": "store",
+		"default": [0.5, 0.5],
+		"help": "reduction factor for each layer"
+	},
+	"m": {
+		"long": "max_levels",
+		"dest": "max_levels",
+		"required": false,
+		"type": "int",
+		"nargs": "+",
+		"action": "store",
+		"default": [3, 3],
+		"help": "max levels for each layer"
+	},
+	"gmv": {
+		"long": "global_min_vertices",
+		"dest": "global_min_vertices",
+		"required": false,
+		"type": "int",
+		"nargs": "+",
+		"action": "store",
+		"default": [100, 100],
+		"help": "minimum number of vertices for each layer in the last level"
+	},
+	"t": {
+		"long": "tolerance",
+		"dest": "tolerance",
+		"required": false,
+		"type": "float",
+		"nargs": "+",
+		"action": "store",
+		"default": [0.1, 0.1],
+		"help": "tolerance"
+	},
+	"i": {
+		"long": "itr",
+		"dest": "itr",
+		"required": false,
+		"type": "int",
+		"nargs": "+",
+		"action": "store",
+		"default": [10, 10],
+		"help": "number of iterations for each layer in the coarsening algorithm"
+	},
+	"ub": {
+		"long": "upper_bound",
+		"dest": "upper_bound",
+		"required": false,
+		"type": "float",
+		"nargs": "+",
+		"action": "store",
+		"default": [0.2, 0.2],
+		"help": "upper bound for each layer"
+	},
+	"c": {
+		"long": "matching",
+		"dest": "matching",
+		"required": false,
+		"type": "str",
+		"nargs": "+",
+		"action": "store",
+		"default": ["gmb", "gmb"],
+		"help": "matching method for each layer"
+	},
+	"s": {
+		"long": "similarity",
+		"dest": "similarity",
+		"required": false,
+		"type": "str",
+		"nargs": "+",
+		"action": "store",
+		"default": ["jaccard", "jaccard"],
+		"help": "similarity measure for each layer"
+	},
+	"rv": {
+		"long": "reverse",
+		"dest": "reverse",
+		"required": false,
+		"type": "str",
+		"nargs": "+",
+		"default": ["true", "true"],
+		"help": "reverse order"
+	},
+	"sd": {
+		"long": "seed_priority",
+		"dest": "seed_priority",
+		"required": false,
+		"type": "str",
+		"nargs": "+",
+		"action": "store",
+		"default": ["degree", "degree"],
+		"help": "seed priority"
+	},
+	"scnf": {
+		"long": "save_conf",
+		"dest": "save_conf",
+		"required": false,
+		"action": "store_true",
+		"default": false,
+		"help": "save config file"
+	},
+	"sgml": {
+		"long": "save_gml",
+		"dest": "save_gml",
+		"required": false,
+		"action": "store_true",
+		"default": false,
+		"help": "save gml file"
+	},
+	"sn": {
+		"long": "save_ncol",
+		"dest": "save_ncol",
+		"required": false,
+		"action": "store_true",
+		"default": false,
+		"help": "save ncol file"
+	},
+	"ssrc": {
+		"long": "save_source",
+		"dest": "save_source",
+		"required": false,
+		"action": "store_true",
+		"default": false,
+		"help": "save source file"
+	},
+	"smbs": {
+		"long": "save_membership",
+		"dest": "save_membership",
+		"required": false,
+		"action": "store_true",
+		"default": false,
+		"help": "save membership file"
+	},
+	"swgh": {
+		"long": "save_weight",
+		"dest": "save_weight",
+		"required": false,
+		"action": "store_true",
+		"default": false,
+		"help": "save weight file"
+	},
+	"sprd": {
+		"long": "save_predecessor",
+		"dest": "save_predecessor",
+		"required": false,
+		"action": "store_true",
+		"default": false,
+		"help": "save predecessor file"
+	},
+	"sscc": {
+		"long": "save_successor",
+		"dest": "save_successor",
+		"required": false,
+		"action": "store_true",
+		"default": false,
+		"help": "save successor file"
+	},
+	"shrr": {
+		"long": "save_hierarchy",
+		"dest": "save_hierarchy",
+		"required": false,
+		"action": "store_true",
+		"default": false,
+		"help": "save hierarchy of networks file"
+	},
+	"sc": {
+		"long": "show_conf",
+		"dest": "show_conf",
+		"required": false,
+		"action": "store_true",
+		"default": false,
+		"help": "show conf file"
+	},
+	"st": {
+		"long": "show_timing",
+		"dest": "show_timing",
+		"required": false,
+		"action": "store_true",
+		"default": false,
+		"help": "show timing"
+	},
+	"tcsv": {
+		"long": "save_timing_csv",
+		"dest": "save_timing_csv",
+		"required": false,
+		"action": "store_true",
+		"default": false,
+		"help": "save timing in csv"
+	},
+	"tjson": {
+		"long": "save_timing_json",
+		"dest": "save_timing_json",
+		"required": false,
+		"action": "store_true",
+		"default": false,
+		"help": "save timing in csv"
+	},
+	"unq": {
+		"long": "unique_key",
+		"dest": "unique_key",
+		"required": false,
+		"action": "store_true",
+		"default": false,
+		"help": "output date and time as unique_key"
 	},
 	"o": {
 		"long": "output_object",

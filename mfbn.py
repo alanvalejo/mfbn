@@ -118,7 +118,7 @@ def main():
             tolerance=options.tolerance, reverse=options.reverse, seed_priority=options.seed_priority,
             threads=options.threads
         )
-
+        print(source_graph['vertices'], source_graph.ecount())
         coarsening = Coarsening(source_graph, **kwargs)
         coarsening.run()
 
@@ -136,9 +136,9 @@ def main():
                     , 'source_vertices': source_graph['vertices']
                     , 'source_vcount': source_graph.vcount()
                     , 'source_ecount': source_graph.ecount()
-                    , 'ecount': coarsened_graph.ecount()
-                    , 'vcount': coarsened_graph.vcount()
-                    , 'vertices': coarsened_graph['vertices']
+                    , 'coarsened_ecount': coarsened_graph.ecount()
+                    , 'coarsened_vcount': coarsened_graph.vcount()
+                    , 'coarsened_vertices': coarsened_graph['vertices']
                     , 'achieved_levels': coarsened_graph['level']
                     , 'reduction_factor': options.reduction_factor
                     , 'max_levels': options.max_levels
@@ -151,7 +151,7 @@ def main():
                 }
 
             if options.save_conf:
-                with open(output + '-' + str(index) + '.conf', 'w+') as f:
+                with open(output + '-' + str(index) + '-info.json', 'w+') as f:
                     json.dump(d, f, indent=4)
 
             if options.show_conf:
@@ -166,7 +166,7 @@ def main():
                         f.write(' '.join(map(str, v['source'])) + '\n')
 
             if options.save_membership:
-                membership = [0] * (options.vertices[0] + options.vertices[1])
+                membership = [0] * (source_graph['vertices'][0] + source_graph['vertices'][1])
                 for v in coarsened_graph.vs():
                     for source in v['source']:
                         membership[source] = v.index

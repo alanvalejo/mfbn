@@ -374,7 +374,7 @@ class MGraph(Graph):
         return graph
 
     def mlpb(self, vertices=None, seed_priority='strength', reduction_factor=0.5, itr=10, tolerance=0.05,
-             upper_bound=0.2, n=None, global_min_vertices=None, reverse=True):
+             upper_bound=0.2, n=None, global_min_vertices=None, fixed=[], reverse=True):
 
         """ Matching via weight-constrained label propagation and neighborhood. """
 
@@ -419,7 +419,7 @@ class MGraph(Graph):
 
             for vertex in vertices_id:
 
-                if self.degree(vertex) == 0:
+                if self.degree(vertex) == 0 or vertex in fixed:
                     continue
 
                 # Tow hopes restriction: It ensures that the match only occurs

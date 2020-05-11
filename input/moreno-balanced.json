@@ -1,59 +1,59 @@
 {
 	"vertices": [
-		754
-		, 509
-	]
-	, "reduction_factor": [
+		754,
+		509
+	],
+	"reduction_factor": [
+		1.0,
 		1.0
-		, 1.0
-	]
-	, "max_levels": [
+	],
+	"max_levels": [
+		3,
 		3
-		, 3
-	]
-	, "global_min_vertices": [
-		450
-		, 350
-	]
-	, "matching": [
+	],
+	"global_min_vertices": [
+		450,
+		350
+	],
+	"matching": [
+		"mlpb",
 		"mlpb"
-		, "mlpb"
-	]
-	, "similarity": [
+	],
+	"similarity": [
+		"weighted_common_neighbors",
 		"weighted_common_neighbors"
-		, "weighted_common_neighbors"
 	]
     , "seed_priority": [
+        "degree",
         "degree"
-        , "degree"
-    ]
-	, "upper_bound": [
+    ],
+	"upper_bound": [
+		0.1,
 		0.1
-		, 0.1
-	]
-	, "itr": [
+	],
+	"itr": [
+		10,
 		10
-		, 10
-	]
-	, "tolerance": [
+	],
+	"tolerance": [
+		0.0001,
 		0.0001
-		, 0.0001
-	]
-	, "threads": 2
-	, "output_directory": "output"
-	, "output": "moreno-balanced"
-	, "input": "input/moreno.ncol"
-	, "save_conf": true
-	, "save_ncol": true
-	, "save_gml": false
-	, "save_source": false
-    , "save_membership": true
-	, "save_predecessor": false
-	, "save_successor": false
-	, "save_timing": false
-	, "save_hierarchy": true
-	, "save_weight": true
-	, "unique_key": false
-	, "show_timing": true
-	, "show_conf": false
+	],
+	"threads": 2,
+	"output_directory": "output",
+	"output": "moreno-balanced",
+	"input": "input/moreno.ncol",
+	"save_conf": true,
+	"save_ncol": true,
+	"save_gml": false,
+	"save_source": false,
+    "save_membership": true,
+	"save_predecessor": false,
+	"save_successor": false,
+	"save_timing": false,
+	"save_hierarchy": true,
+	"save_weight": true,
+	"unique_key": false,
+	"show_timing": true,
+	"show_conf": false
 }

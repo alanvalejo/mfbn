@@ -211,6 +211,7 @@ class Coarsening:
                     do_matching = False
 
                 if do_matching:
+
                     contract = True
                     level[layer] += 1
 
