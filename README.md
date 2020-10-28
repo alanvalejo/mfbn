@@ -268,7 +268,7 @@ E.g., `show_timing` track (and show in bash) the execution time of each algorith
 **Contact**
 
 - Alan Valejo
-- alanvalejo@gmail.com.br
+- alanvalejo@gmail.com
 - www.alanvalejo.com.br
 - Postdoctoral research fellow at the University of São Paulo (USP), Brazil
 
