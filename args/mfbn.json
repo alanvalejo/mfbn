@@ -80,9 +80,59 @@
 		"default": [3, 3],
 		"help": "max levels for each layer"
 	},
+	"pgrd": {
+		"long": "pgrd",
+		"dest": "pgrd",
+		"required": false,
+		"type": "float",
+		"nargs": "+",
+		"action": "store",
+		"default": [0.5, 0.5],
+		"help": "pgrd"
+	},
+	"deltap": {
+		"long": "deltap",
+		"dest": "deltap",
+		"required": false,
+		"type": "float",
+		"nargs": "+",
+		"action": "store",
+		"default": [0.35, 0.35],
+		"help": "tolerance"
+	},
+	"deltav": {
+		"long": "deltav",
+		"dest": "deltav",
+		"required": false,
+		"type": "float",
+		"nargs": "+",
+		"action": "store",
+		"default": [0.35, 0.35],
+		"help": "tolerance"
+	},
+	"wmin": {
+		"long": "wmin",
+		"dest": "wmin",
+		"required": false,
+		"type": "float",
+		"nargs": "+",
+		"action": "store",
+		"default": [0.0, 0.0],
+		"help": "tolerance"
+	},
+	"wmax": {
+		"long": "wmax",
+		"dest": "wmax",
+		"required": false,
+		"type": "float",
+		"nargs": "+",
+		"action": "store",
+		"default": [1.0, 1.0],
+		"help": "tolerance"
+	},
 	"gmv": {
-		"long": "global_min_vertices",
-		"dest": "global_min_vertices",
+		"long": "gmv",
+		"dest": "gmv",
 		"required": false,
 		"type": "int",
 		"nargs": "+",

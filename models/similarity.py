@@ -4,7 +4,7 @@
 """
 Similarity measures
 
-Copyright (C) 2017 Alan Valejo <alanvalejo@gmail.com> All rights reserved
+Copyright (C) 2020 Alan Valejo <alanvalejo@gmail.com> All rights reserved
 
 This program comes with ABSOLUTELY NO WARRANTY. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS
 WITH YOU.
@@ -24,6 +24,10 @@ Giving credit to the author by citing the papers.
 
 import math
 
+from numpy import dot
+from numpy.linalg import norm
+from numpy import linalg as LA
+
 __maintainer__ = 'Alan Valejo'
 __email__ = 'alanvalejo@gmail.com'
 __author__ = 'Alan Valejo'
@@ -32,7 +36,7 @@ __homepage__ = 'https://www.alanvalejo.com.br'
 __license__ = 'GNU.GPL.v3'
 __docformat__ = 'markdown en'
 __version__ = '0.1'
-__date__ = '2019-08-08'
+__date__ = '2020-05-05'
 
 class Similarity(object):
 
@@ -42,10 +46,30 @@ class Similarity(object):
 		self.graph = graph
 		self.adjlist = adjlist
 
+	def unweight(self, i, j):
+		""" Calculates pairwise weight edge on a given graph. """
+
+		return 1.0
+
 	def weight(self, i, j):
-		""" Calculates pairwise weight edge on a geiven graph. """
+		""" Calculates pairwise weight edge on a given graph. """
 
 		return self.graph[i, j]
+
+	def get_common_neighbors(self, i, j):
+		""" Calculates pairwise common neighbors similarity on a given unweighted graph. """
+
+		return self.adjlist[i].intersection(self.adjlist[j])
+
+	def nmf_cosine(self, i, j):
+		""" The similarity between two nodes is given by the cosine of the
+		angle between the corresponding columns in H, multiplied
+		by their norms. """
+
+		h_i = self.graph.vs[i]['nmf_array']
+		h_j = self.graph.vs[j]['nmf_array']
+		cosine = dot(h_i, h_j) / (norm(h_i) * norm(h_j))
+		return LA.norm(h_i, 1) * LA.norm(h_j, 1) * cosine
 
 	def preferential_attachment(self, i, j):
 		""" Calculates pairwise preferential attachment similarities on a given unweighted graph. """
@@ -57,10 +81,14 @@ class Similarity(object):
 
 		return len(self.adjlist[i].intersection(self.adjlist[j]))
 
-	def get_common_neighbors(self, i, j):
-		""" Calculates pairwise common neighbors similarity on a given unweighted graph. """
+	def newman_collaboration(self, i, j):
+		""" Calculates pairwise Newman’s collaboration similarity """
 
-		return self.adjlist[i].intersection(self.adjlist[j])
+		_sum = 0.0
+		cn = self.adjlist[i].intersection(self.adjlist[j])
+		for z in cn:
+			_sum += 1 / (self.graph.strength(z) - 1)
+		return _sum
 
 	def weighted_common_neighbors(self, i, j):
 		"""

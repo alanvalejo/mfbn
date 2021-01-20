@@ -2,9 +2,9 @@
 # coding: utf-8
 
 """
-MFBN (Multilevel framework for bipartite networks)
+MFBN: Multilevel framework for bipartite networks
 
-Copyright (C) 2017 Alan Valejo <alanvalejo@gmail.com> All rights reserved
+Copyright (C) 2020 Alan Valejo <alanvalejo@gmail.com> All rights reserved
 
 This program comes with ABSOLUTELY NO WARRANTY. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS
 WITH YOU.
@@ -23,6 +23,7 @@ Giving credit to the author by citing the papers.
 """
 
 import operator
+
 import numpy
 import random
 import math
@@ -30,6 +31,17 @@ import collections
 
 from random import sample
 from igraph import Graph
+from scipy import sparse
+from numpy import dot
+from numpy.linalg import norm
+from numpy import linalg as LA
+from models.similarity import Similarity
+from sklearn.metrics.pairwise import cosine_similarity
+from scipy import spatial
+from sklearn.decomposition import non_negative_factorization
+# from sklearn.decomposition import ProjectedGradientNMF
+from sklearn.decomposition import NMF
+import warnings
 
 __maintainer__ = 'Alan Valejo'
 __email__ = 'alanvalejo@gmail.com'
@@ -39,8 +51,7 @@ __homepage__ = 'https://www.alanvalejo.com.br'
 __license__ = 'GNU.GPL.v3'
 __docformat__ = 'markdown en'
 __version__ = '0.1'
-__date__ = '2019-08-08'
-
+__date__ = '2020-05-05'
 
 def load_ncol(filename):
     """
@@ -112,11 +123,16 @@ class MGraph(Graph):
         predecessors = []
         matching = numpy.array(matching)
         uniqid = 0
-        clusters = numpy.unique(matching)
-        for cluster_id in clusters:
-            vertices = numpy.where(matching == cluster_id)[0]
-            weight = 0
-            if len(vertices) > 0:
+        for layer in range(self['layers']):
+            start = sum(self['vertices'][0:layer])
+            end = sum(self['vertices'][0:layer + 1])
+            matching_layer = matching[start:end]
+            vertices_layer = numpy.arange(start, end)
+            clusters = numpy.unique(matching_layer)
+            for cluster_id in clusters:
+                ids = numpy.where(matching_layer == cluster_id)[0]
+                vertices = vertices_layer[ids]
+                weight = 0
                 source = []
                 predecessor = []
                 for vertex in vertices:
@@ -125,7 +141,7 @@ class MGraph(Graph):
                     source.extend(self.vs[vertex]['source'])
                     predecessor.append(vertex)
                 weights.append(weight)
-                types.append(self.vs[vertices[0]]['type'])
+                types.append(layer)
                 sources.append(source)
                 predecessors.append(predecessor)
                 uniqid += 1
@@ -168,7 +184,7 @@ class MGraph(Graph):
 
         return coarse
 
-    def gmb(self, vertices=None, reduction_factor=0.5, reverse=True):
+    def gmb(self, vertices=None, reduction_factor=0.5, reverse=True, gmv=None):
         """
         Matches are restricted between vertices that are not adjacent
         but are only allowed to match with neighbors of its neighbors,
@@ -194,7 +210,15 @@ class MGraph(Graph):
         visited = [0] * self.vcount()
         edges = sorted(dict_edges.items(), key=operator.itemgetter(1), reverse=reverse)
         merge_count = int(reduction_factor * len(vertices))
+        if gmv is not None:
+            while True:
+                if len(vertices) - merge_count >= gmv or reduction_factor <= 0.0:
+                    break
+                reduction_factor -= 0.01
+                merge_count = int(reduction_factor * len(vertices))
         for edge, value in edges:
+            if merge_count == 0:
+                break
             vertex = edge[0]
             neighbor = edge[1]
             if (visited[vertex] != 1) and (visited[neighbor] != 1):
@@ -203,12 +227,10 @@ class MGraph(Graph):
                 visited[neighbor] = 1
                 visited[vertex] = 1
                 merge_count -= 1
-            if merge_count == 0:
-                break
 
         return matching
 
-    def rgmb(self, matching, vertices=None, reduction_factor=0.5, seed_priority='random', reverse=True):
+    def rgmb(self, vertices=None, reduction_factor=0.5, seed_priority='random', reverse=True, gmv=None):
         """
         Matches are restricted between vertices that are not adjacent
         but are only allowed to match with neighbors of its neighbors,
@@ -235,6 +257,13 @@ class MGraph(Graph):
         visited = [0] * self.vcount()
         index = 0
         merge_count = int(reduction_factor * len(vertices))
+        if gmv is not None:
+            while True:
+                if len(vertices) - merge_count >= gmv or reduction_factor <= 0.0:
+                    break
+                reduction_factor -= 0.01
+                merge_count = int(reduction_factor * len(vertices))
+
         while merge_count > 0 and index < len(vertices):
             # Randomly select a vertex v of V
             vertex = vertices_id[index]
@@ -267,7 +296,7 @@ class MGraph(Graph):
 
         return matching
 
-    def rm(self, reduction_factor=0.5):
+    def rm(self, reduction_factor=0.5, gmv=None):
         """
         Random Matching: Select a maximal matching using a
         randomized algorithm
@@ -275,10 +304,16 @@ class MGraph(Graph):
 
         matching = numpy.array([-1] * self['source_vertices'])
         merge_count = int(reduction_factor * self.vcount())
+        if gmv is not None:
+            while True:
+                if self.vcount() - merge_count >= gmv or reduction_factor <= 0.0:
+                    break
+                reduction_factor -= 0.01
+                merge_count = int(reduction_factor * self.vcount())
         self.get_random_edges(merge_count, matching)
         return matching
 
-    def lem(self, reduction_factor=0.5):
+    def lem(self, reduction_factor=0.5, gmv=None):
         """
         Heavy Light Matching: Search for a minimal matching using the
         weights of the edges of the graph.
@@ -286,10 +321,92 @@ class MGraph(Graph):
 
         matching = numpy.array([-1] * self['source_vertices'])
         merge_count = int(reduction_factor * self.vcount())
+        if gmv is not None:
+            while True:
+                if self.vcount() - merge_count >= gmv or reduction_factor <= 0.0:
+                    break
+                reduction_factor -= 0.01
+                merge_count = int(reduction_factor * self.vcount())
         self.get_sorted_edges(merge_count, matching, reverse=False)
         return matching
 
-    def hem(self, reduction_factor=0.5):
+    def mnmf(self, reduction_factor=0.5, k=100, gmv=None):
+        """
+        Matching via non-negative matrix factorization
+        """
+
+        N = self.vcount()
+        edges = self.get_edgelist()
+        weights = self.es['weight']
+        X = sparse.csr_matrix((weights, zip(*edges)), shape=(N, N))
+
+        model = NMF(n_components=k, init='random', random_state=0, max_iter=200, tol=0.005, solver='mu')
+        W = model.fit_transform(X)
+        H = model.components_
+
+        weights = []
+        for edge in self.es():
+            a = W[edge.tuple[0]]
+            b = W[edge.tuple[1]]
+            if not numpy.count_nonzero(a) or not numpy.count_nonzero(b):
+                weights.append(0.0)
+                continue
+            cosine = 1 - spatial.distance.cosine(a, b)
+            weights.append(cosine)
+
+        self.es['weight'] = weights
+        return self.hem(reduction_factor=reduction_factor, gmv=gmv)
+
+    def msvm(self, reduction_factor=0.5, gmv=None):
+        """
+        Most Similar Vertex Matching: The algorithm matches the most similar pair based
+        on a similar similarity measure, like CN
+        """
+
+        matching = numpy.array([-1] * self['source_vertices'])
+        vertices = range(self.vcount())
+        vertices_id = random.sample(vertices, len(vertices))
+
+        # Find the matching
+        visited = [0] * self.vcount()
+        index = 0
+        merge_count = int(reduction_factor * len(vertices))
+        if gmv is not None:
+            while True:
+                if len(vertices) - merge_count >= gmv or reduction_factor <= 0.0:
+                    break
+                reduction_factor -= 0.01
+                merge_count = int(reduction_factor * len(vertices))
+
+        while merge_count > 0 and index < len(vertices):
+            # Randomly select a vertex v of V
+            vertex = vertices_id[index]
+            if visited[vertex] == 1:
+                index += 1
+                continue
+            # Select the edge (v, u) of E which maximum score
+            neighbors = self.neighbors(vertex)
+            _max = 0.0
+            neighbor = vertex
+            for n in neighbors:
+                if visited[n] == 1:
+                    continue
+                # Calling a function of a module from a string
+                score = self['similarity'](vertex, n)
+                if score > _max:
+                    _max = score
+                    neighbor = n
+            # Match vertex and its neighbor with maximum score
+            matching[self.vs[neighbor]['name']] = self.vs[vertex]['name']
+            matching[self.vs[vertex]['name']] = self.vs[vertex]['name']
+            visited[neighbor] = 1
+            visited[vertex] = 1
+            merge_count -= 1
+            index += 1
+
+        return matching
+
+    def hem(self, reduction_factor=0.5, gmv=None):
         """
         Heavy Edge Matching: Search for a maximal matching using the
         weights of the edges of the graph.
@@ -297,6 +414,12 @@ class MGraph(Graph):
 
         matching = numpy.array([-1] * self['source_vertices'])
         merge_count = int(reduction_factor * self.vcount())
+        if gmv is not None:
+            while True:
+                if self.vcount() - merge_count >= gmv or reduction_factor <= 0.0:
+                    break
+                reduction_factor -= 0.01
+                merge_count = int(reduction_factor * self.vcount())
         self.get_sorted_edges(merge_count, matching, reverse=True)
         return matching
 
@@ -307,8 +430,10 @@ class MGraph(Graph):
         """
 
         visited = [0] * self.vcount()
-        edges = sample(self.es(), self.ecount())
+        edges = sample(list(self.es()), self.ecount())
         for edge in edges:
+            if merge_count == 0:
+                break
             if (visited[edge.tuple[0]] == 0) and (visited[edge.tuple[1]] == 0):
                 u = self.vs[edge.tuple[0]]['name']
                 v = self.vs[edge.tuple[1]]['name']
@@ -317,8 +442,6 @@ class MGraph(Graph):
                 visited[edge.tuple[1]] = 1
                 visited[edge.tuple[0]] = 1
                 merge_count -= 1
-            if merge_count == 0:
-                break
 
     def get_sorted_edges(self, merge_count, matching, reverse=True):
         """
@@ -330,6 +453,8 @@ class MGraph(Graph):
         visited = [0] * self.vcount()
         edges = sorted(self.es(), key=lambda edge: edge['weight'], reverse=reverse)
         for edge in edges:
+            if merge_count == 0:
+                break
             if (visited[edge.tuple[0]] == 0) and (visited[edge.tuple[1]] == 0):
                 u = self.vs[edge.tuple[0]]['name']
                 v = self.vs[edge.tuple[1]]['name']
@@ -338,10 +463,8 @@ class MGraph(Graph):
                 visited[edge.tuple[1]] = 1
                 visited[edge.tuple[0]] = 1
                 merge_count -= 1
-            if merge_count == 0:
-                break
 
-    def weighted_one_mode_projection(self, vertices):
+    def weighted_one_mode_projection(self, vertices, similarity='common_neighbors'):
         """
         Application of a one-mode projection to a bipartite network generates
         two unipartite networks, one for each layer, so that vertices with
@@ -363,7 +486,7 @@ class MGraph(Graph):
             for twohop in twohops:
                 if visited[twohop] == 1:
                     continue
-                dict_edges[(name_to_id[vertex], name_to_id[twohop])] = self['similarity'](vertex, twohop)
+                dict_edges[(name_to_id[vertex], name_to_id[twohop])] = self['projection'](vertex, twohop)
             visited[vertex] = 1
 
         if len(dict_edges) > 0:
@@ -371,18 +494,21 @@ class MGraph(Graph):
             graph.add_edges(edges)
             graph.es['weight'] = weights
 
+        graph['adjlist'] = list(map(set, graph.get_adjlist()))
+        graph['similarity'] = getattr(Similarity(graph, graph['adjlist']), similarity)
+
         return graph
 
     def mlpb(self, vertices=None, seed_priority='strength', reduction_factor=0.5, itr=10, tolerance=0.05,
-             upper_bound=0.2, n=None, global_min_vertices=None, fixed=[], reverse=True):
+             upper_bound=0.2, n=None, gmv=None, reverse=True):
 
         """ Matching via weight-constrained label propagation and neighborhood. """
 
         matching = numpy.array([-1] * self.vcount())
         matching[vertices] = vertices
 
-        if global_min_vertices:
-            min_vertices = global_min_vertices
+        if gmv:
+            min_vertices = gmv
         else:
             min_vertices = int((1 - reduction_factor) * len(vertices))
         if min_vertices < 1:
@@ -392,7 +518,7 @@ class MGraph(Graph):
         number_of_vertices = len(vertices)
         weight_of_sv = self.vs['weight']
         label_dict = dict(zip(vertices, vertices))
-        twohops_dict = collections.defaultdict(float)
+        twohops_dict = collections.defaultdict(int)
         similarity_dict = collections.defaultdict(float)
 
         # Select seed set expansion: case of strength or degree seed
@@ -419,7 +545,7 @@ class MGraph(Graph):
 
             for vertex in vertices_id:
 
-                if self.degree(vertex) == 0 or vertex in fixed:
+                if self.degree(vertex) == 0:
                     continue
 
                 # Tow hopes restriction: It ensures that the match only occurs
@@ -437,6 +563,7 @@ class MGraph(Graph):
                         else:
                             u, v = neighbor, vertex
                         if not similarity_dict.get((u, v), False):
+                            # similarity_dict[(u, v)] = self['similarity'](u, v) / math.sqrt(self.degree(u) + self.degree(v))
                             similarity_dict[(u, v)] = self['similarity'](u, v)
                         if similarity_dict[(u, v)] > 0.0:
                             Q[label_dict[neighbor]] += similarity_dict[(u, v)]
@@ -469,3 +596,8 @@ class MGraph(Graph):
             matching[key] = value
 
         return matching
+
+    def number_of_components(self):
+        components = self.components()
+        components_sizes = components.sizes()
+        return len(components_sizes)

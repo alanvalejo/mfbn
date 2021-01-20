@@ -114,11 +114,11 @@ def main():
         kwargs = dict(
             reduction_factor=options.reduction_factor, max_levels=options.max_levels,
             matching=options.matching, similarity=options.similarity, itr=options.itr,
-            upper_bound=options.upper_bound, global_min_vertices=options.global_min_vertices,
+            upper_bound=options.upper_bound, gmv=options.gmv,
             tolerance=options.tolerance, reverse=options.reverse, seed_priority=options.seed_priority,
             threads=options.threads
         )
-        print(source_graph['vertices'], source_graph.ecount())
+
         coarsening = Coarsening(source_graph, **kwargs)
         coarsening.run()
 
@@ -145,7 +145,7 @@ def main():
                     , 'similarity': options.similarity
                     , 'matching': options.matching
                     , 'upper_bound': options.upper_bound
-                    , 'global_min_vertices': options.global_min_vertices
+                    , 'gmv': options.gmv
                     , 'itr': options.itr
                     , 'level': level
                 }
