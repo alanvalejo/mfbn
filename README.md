@@ -21,45 +21,6 @@
 > [5] Valejo, Alan and Ferreira, V. and Fabbri, R. and Oliveira, Maria C. F. and Lopes, A. A., A critical survey of the 
 >multilevel method in complex networks, in ACM Computing Surveys, accepted paper, 2019
 
-~~~~~{.bib}
-@article{valejo2020coarsening,
-    author = {Valejo, Alan and Faleiros, T. P. and Oliveira, Maria C. R. F. and Lopes, A.},
-    title = {A coarsening method for bipartite networks via weight-constrained label propagation},
-    journal = {Knowledge-Based Systems},
-    year = {2020},
-    volume = {195},
-    pages = {105678},
-}
-@article{valejo2018multilevel,
-    author = {Valejo, Alan and Oliveira, Maria C. F. and Filho, Geraldo P. R. and Lopes, A. A.},
-    title = {Multilevel approach for combinatorial optimization in bipartite network},
-    journal = {Knowledge-based systems},
-    year = {2018},
-    pages = {45--61},
-    volume = {151},
-}
-@inproceedings{valejo2018community,
-    author = {Valejo, Alan and Ferreira, V. and Oliveira, Maria C. F. and Lopes, A. A.},
-    title = {Community detection in bipartite network: a modified coarsening approach},
-    booktitle = {International symposium on information management and big data (SIMBig), track on social network and media analysis and mining (SNMAN). Part of the Communications in Computer and Information Science book series (CCIS, volume 795)},
-    year = {2018},
-    pages = {123--136},
-}
-@inproceedings{valejo2017one,
-    author = {Valejo, Alan and Filho, Geraldo P. R. and Oliveira, Maria C. F. and Ferreira, V. and Lopes, A. A.},
-    title = {One-mode projection-based multilevel approach for community detection in bipartite networks},
-    booktitle = {International symposium on information management and big data (SIMBig), track on social network and media analysis and mining (SNMAN)},
-    year = {2017},
-    pages = {101-108},
-}
-@article{valejo2019critical,
-    author = {Valejo, Alan and Ferreira, V. and Fabbri, R. and Oliveira, Maria C. F. and Lopes, A. A.},
-    title = {A critical survey of the multilevel method in complex networks},
-    journal = {ACM Computing Surveys, accepted paper},
-    year = {2020}
-}
-~~~~~
-
 ```
 Warning
 -------
