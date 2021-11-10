@@ -1,3 +1,65 @@
+**References**
+
+> [1] Valejo, Alan and Faleiros, T. P. and Oliveira, Maria C. F. and Lopes, A. A., A coarsening method for bipartite
+>networks via weight-constrained label propagation, in Knowledge-based systems, p. 105678, vol. 195, 2019, 
+>doi: https://doi.org/10.1016/j.knosys.2020.105678
+>
+> [2] Valejo, Alan and Oliveira, Maria C. F. and Filho, Geraldo P. R. and Lopes, A. A., Multilevel approach for 
+>combinatorial optimization in bipartite network, in Knowledge-based systems, p. 45--61, vol. 151, 2018, 
+>doi: https://doi.org/10.1016/j.knosys.2018.03.021
+>
+> [3] Valejo, Alan and Ferreira, V. and Oliveira, Maria C. F. and Lopes, A. A., Community detection in bipartite 
+>network: a modified coarsening approach, in International symposium on information management and big data (SIMBig), 
+>track on social network and media analysis and mining (SNMAN). Part of the Communications in Computer and Information 
+>Science book series (CCIS, volume 795), p. 123--136, 2017, doi: https://doi.org/10.1007/978-3-319-90596-9_9
+>
+> [4] Valejo, Alan and Filho, Geraldo P. R. and Oliveira, Maria C. F. and Ferreira, V. and Lopes, A. A., One-mode 
+>projection-based multilevel approach for community detection in bipartite networks, in International symposium on 
+>information management and big data (SIMBig), track on social network and media analysis and mining (SNMAN), 
+>p. 101-108, 2017 , doi: http://ceur-ws.org/Vol-2029/paper8.pdf
+>
+> [5] Valejo, Alan and Ferreira, V. and Fabbri, R. and Oliveira, Maria C. F. and Lopes, A. A., A critical survey of the 
+>multilevel method in complex networks, in ACM Computing Surveys, accepted paper, 2019
+
+~~~~~{.bib}
+@article{valejo2020coarsening,
+    author = {Valejo, Alan and Faleiros, T. P. and Oliveira, Maria C. R. F. and Lopes, A.},
+    title = {A coarsening method for bipartite networks via weight-constrained label propagation},
+    journal = {Knowledge-Based Systems},
+    year = {2020},
+    volume = {195},
+    pages = {105678},
+}
+@article{valejo2018multilevel,
+    author = {Valejo, Alan and Oliveira, Maria C. F. and Filho, Geraldo P. R. and Lopes, A. A.},
+    title = {Multilevel approach for combinatorial optimization in bipartite network},
+    journal = {Knowledge-based systems},
+    year = {2018},
+    pages = {45--61},
+    volume = {151},
+}
+@inproceedings{valejo2018community,
+    author = {Valejo, Alan and Ferreira, V. and Oliveira, Maria C. F. and Lopes, A. A.},
+    title = {Community detection in bipartite network: a modified coarsening approach},
+    booktitle = {International symposium on information management and big data (SIMBig), track on social network and media analysis and mining (SNMAN). Part of the Communications in Computer and Information Science book series (CCIS, volume 795)},
+    year = {2018},
+    pages = {123--136},
+}
+@inproceedings{valejo2017one,
+    author = {Valejo, Alan and Filho, Geraldo P. R. and Oliveira, Maria C. F. and Ferreira, V. and Lopes, A. A.},
+    title = {One-mode projection-based multilevel approach for community detection in bipartite networks},
+    booktitle = {International symposium on information management and big data (SIMBig), track on social network and media analysis and mining (SNMAN)},
+    year = {2017},
+    pages = {101-108},
+}
+@article{valejo2019critical,
+    author = {Valejo, Alan and Ferreira, V. and Fabbri, R. and Oliveira, Maria C. F. and Lopes, A. A.},
+    title = {A critical survey of the multilevel method in complex networks},
+    journal = {ACM Computing Surveys, accepted paper},
+    year = {2020}
+}
+~~~~~
+
 ```
 Warning
 -------
@@ -290,67 +352,5 @@ http://www.gnu.org/licenses/.
 **To-do list**
 
 * Implements the output of the objects
-
-**References**
-
-> [1] Valejo, Alan and Faleiros, T. P. and Oliveira, Maria C. F. and Lopes, A. A., A coarsening method for bipartite
->networks via weight-constrained label propagation, in Knowledge-based systems, p. 105678, vol. 195, 2019, 
->doi: https://doi.org/10.1016/j.knosys.2020.105678
->
-> [2] Valejo, Alan and Oliveira, Maria C. F. and Filho, Geraldo P. R. and Lopes, A. A., Multilevel approach for 
->combinatorial optimization in bipartite network, in Knowledge-based systems, p. 45--61, vol. 151, 2018, 
->doi: https://doi.org/10.1016/j.knosys.2018.03.021
->
-> [3] Valejo, Alan and Ferreira, V. and Oliveira, Maria C. F. and Lopes, A. A., Community detection in bipartite 
->network: a modified coarsening approach, in International symposium on information management and big data (SIMBig), 
->track on social network and media analysis and mining (SNMAN). Part of the Communications in Computer and Information 
->Science book series (CCIS, volume 795), p. 123--136, 2017, doi: https://doi.org/10.1007/978-3-319-90596-9_9
->
-> [4] Valejo, Alan and Filho, Geraldo P. R. and Oliveira, Maria C. F. and Ferreira, V. and Lopes, A. A., One-mode 
->projection-based multilevel approach for community detection in bipartite networks, in International symposium on 
->information management and big data (SIMBig), track on social network and media analysis and mining (SNMAN), 
->p. 101-108, 2017 , doi: http://ceur-ws.org/Vol-2029/paper8.pdf
->
-> [5] Valejo, Alan and Ferreira, V. and Fabbri, R. and Oliveira, Maria C. F. and Lopes, A. A., A critical survey of the 
->multilevel method in complex networks, in ACM Computing Surveys, accepted paper, 2019
-
-~~~~~{.bib}
-@article{valejo2020coarsening,
-    author = {Valejo, Alan and Faleiros, T. P. and Oliveira, Maria C. R. F. and Lopes, A.},
-    title = {A coarsening method for bipartite networks via weight-constrained label propagation},
-    journal = {Knowledge-Based Systems},
-    year = {2020},
-    volume = {195},
-    pages = {105678},
-}
-@article{valejo2018multilevel,
-    author = {Valejo, Alan and Oliveira, Maria C. F. and Filho, Geraldo P. R. and Lopes, A. A.},
-    title = {Multilevel approach for combinatorial optimization in bipartite network},
-    journal = {Knowledge-based systems},
-    year = {2018},
-    pages = {45--61},
-    volume = {151},
-}
-@inproceedings{valejo2018community,
-    author = {Valejo, Alan and Ferreira, V. and Oliveira, Maria C. F. and Lopes, A. A.},
-    title = {Community detection in bipartite network: a modified coarsening approach},
-    booktitle = {International symposium on information management and big data (SIMBig), track on social network and media analysis and mining (SNMAN). Part of the Communications in Computer and Information Science book series (CCIS, volume 795)},
-    year = {2018},
-    pages = {123--136},
-}
-@inproceedings{valejo2017one,
-    author = {Valejo, Alan and Filho, Geraldo P. R. and Oliveira, Maria C. F. and Ferreira, V. and Lopes, A. A.},
-    title = {One-mode projection-based multilevel approach for community detection in bipartite networks},
-    booktitle = {International symposium on information management and big data (SIMBig), track on social network and media analysis and mining (SNMAN)},
-    year = {2017},
-    pages = {101-108},
-}
-@article{valejo2019critical,
-    author = {Valejo, Alan and Ferreira, V. and Fabbri, R. and Oliveira, Maria C. F. and Lopes, A. A.},
-    title = {A critical survey of the multilevel method in complex networks},
-    journal = {ACM Computing Surveys, accepted paper},
-    year = {2020}
-}
-~~~~~
 
 <div class="footer"> &copy; Copyright (C) 2016 Alan Valejo &lt;alanvalejo@gmail.com&gt; All rights reserved.</div>
