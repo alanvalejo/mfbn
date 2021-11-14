@@ -4,3 +4,4 @@ output
 log
 .idea
 *.so
+.DS_Store

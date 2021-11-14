@@ -53,6 +53,7 @@ __docformat__ = 'markdown en'
 __version__ = '0.1'
 __date__ = '2020-05-05'
 
+
 def load_ncol(filename):
     """
     Load ncol npartite graph and generate special attributes
@@ -161,7 +162,8 @@ class MGraph(Graph):
 
         coarse['vertices_by_type'] = []
         for layer in range(self['layers']):
-            coarse['vertices_by_type'].append(coarse.vs.select(type=layer).indices)
+            coarse['vertices_by_type'].append(
+                coarse.vs.select(type=layer).indices)
             coarse['vertices'].append(len(coarse['vertices_by_type'][layer]))
 
         # Contract edges
@@ -172,10 +174,11 @@ class MGraph(Graph):
 
             # Add edge in coarsened graph
             if v_successor < u_successor:
-                dict_edges[(v_successor, u_successor)] = dict_edges.get((v_successor, u_successor), 0) + edge['weight']
+                dict_edges[(v_successor, u_successor)] = dict_edges.get(
+                    (v_successor, u_successor), 0) + edge['weight']
             else:
-                dict_edges[(u_successor, v_successor)] = dict_edges.get((u_successor, v_successor), 0) + edge['weight']
-
+                dict_edges[(u_successor, v_successor)] = dict_edges.get(
+                    (u_successor, v_successor), 0) + edge['weight']
         if len(dict_edges) > 0:
             edges, weights = list(zip(*dict_edges.items()))
             coarse.add_edges(edges)
@@ -203,12 +206,14 @@ class MGraph(Graph):
             for twohop in twohops:
                 if visited[twohop] == 1:
                     continue
-                dict_edges[(vertex, twohop)] = self['similarity'](vertex, twohop)
+                dict_edges[(vertex, twohop)] = self['similarity'](
+                    vertex, twohop)
             visited[vertex] = 1
 
         # Select promising matches or pair of vertices
         visited = [0] * self.vcount()
-        edges = sorted(dict_edges.items(), key=operator.itemgetter(1), reverse=reverse)
+        edges = sorted(dict_edges.items(),
+                       key=operator.itemgetter(1), reverse=reverse)
         merge_count = int(reduction_factor * len(vertices))
         if gmv is not None:
             while True:
@@ -242,13 +247,16 @@ class MGraph(Graph):
 
         # Select seed set expansion
         if seed_priority == 'strength':
-            vertices_score = numpy.array(self.strength(vertices, weights='weight'))
+            vertices_score = numpy.array(
+                self.strength(vertices, weights='weight'))
             dictionary = dict(zip(vertices, vertices_score))
-            vertices_id = sorted(dictionary, key=dictionary.__getitem__, reverse=reverse)
+            vertices_id = sorted(
+                dictionary, key=dictionary.__getitem__, reverse=reverse)
         if seed_priority == 'degree':
             vertices_score = numpy.array(self.degree(vertices))
             dictionary = dict(zip(vertices, vertices_score))
-            vertices_id = sorted(dictionary, key=dictionary.__getitem__, reverse=reverse)
+            vertices_id = sorted(
+                dictionary, key=dictionary.__getitem__, reverse=reverse)
         if seed_priority == 'random':
             vertices_id = vertices
             vertices_id = random.sample(vertices_id, len(vertices_id))
@@ -340,7 +348,8 @@ class MGraph(Graph):
         weights = self.es['weight']
         X = sparse.csr_matrix((weights, zip(*edges)), shape=(N, N))
 
-        model = NMF(n_components=k, init='random', random_state=0, max_iter=200, tol=0.005, solver='mu')
+        model = NMF(n_components=k, init='random', random_state=0,
+                    max_iter=200, tol=0.005, solver='mu')
         W = model.fit_transform(X)
         H = model.components_
 
@@ -451,7 +460,8 @@ class MGraph(Graph):
         """
 
         visited = [0] * self.vcount()
-        edges = sorted(self.es(), key=lambda edge: edge['weight'], reverse=reverse)
+        edges = sorted(
+            self.es(), key=lambda edge: edge['weight'], reverse=reverse)
         for edge in edges:
             if merge_count == 0:
                 break
@@ -486,7 +496,8 @@ class MGraph(Graph):
             for twohop in twohops:
                 if visited[twohop] == 1:
                     continue
-                dict_edges[(name_to_id[vertex], name_to_id[twohop])] = self['projection'](vertex, twohop)
+                dict_edges[(name_to_id[vertex], name_to_id[twohop])
+                           ] = self['projection'](vertex, twohop)
             visited[vertex] = 1
 
         if len(dict_edges) > 0:
@@ -495,13 +506,13 @@ class MGraph(Graph):
             graph.es['weight'] = weights
 
         graph['adjlist'] = list(map(set, graph.get_adjlist()))
-        graph['similarity'] = getattr(Similarity(graph, graph['adjlist']), similarity)
+        graph['similarity'] = getattr(Similarity(
+            graph, graph['adjlist']), similarity)
 
         return graph
 
     def mlpb(self, vertices=None, seed_priority='strength', reduction_factor=0.5, itr=10, tolerance=0.05,
              upper_bound=0.2, n=None, gmv=None, reverse=True):
-
         """ Matching via weight-constrained label propagation and neighborhood. """
 
         matching = numpy.array([-1] * self.vcount())
@@ -523,13 +534,16 @@ class MGraph(Graph):
 
         # Select seed set expansion: case of strength or degree seed
         if seed_priority == 'strength':
-            vertices_score = numpy.array(self.strength(vertices, weights='weight'))
+            vertices_score = numpy.array(
+                self.strength(vertices, weights='weight'))
             dictionary = dict(zip(vertices, vertices_score))
-            vertices_id = sorted(dictionary, key=dictionary.__getitem__, reverse=reverse)
+            vertices_id = sorted(
+                dictionary, key=dictionary.__getitem__, reverse=reverse)
         if seed_priority == 'degree':
             vertices_score = numpy.array(self.degree(vertices))
             dictionary = dict(zip(vertices, vertices_score))
-            vertices_id = sorted(dictionary, key=dictionary.__getitem__, reverse=reverse)
+            vertices_id = sorted(
+                dictionary, key=dictionary.__getitem__, reverse=reverse)
 
         tolerance = tolerance * len(vertices)
         swap = tolerance + 1
@@ -551,12 +565,13 @@ class MGraph(Graph):
                 # Tow hopes restriction: It ensures that the match only occurs
                 # between vertices of the same type
                 if not twohops_dict.get(vertex, False):
-                    neighborhood = self.neighborhood(vertices=vertex, order=2)
-                    twohops_dict[vertex] = neighborhood[(len(self['adjlist'][vertex]) + 1):]
+                    twohops_dict[vertex] = self.neighborhood(
+                        vertices=vertex, order=2, mindist=2)
 
                 # Update neighborhood edge density
                 Q = collections.defaultdict(float)
                 for neighbor in twohops_dict[vertex]:
+                    # supervertex weight restriction
                     if weight_of_sv[label_dict[neighbor]] + self.vs[vertex]['weight'] <= max_size:
                         if vertex < neighbor:
                             u, v = vertex, neighbor
@@ -574,7 +589,8 @@ class MGraph(Graph):
 
                 if Q:
                     # Select the dominant label
-                    dominant_label = max(Q.items(), key=operator.itemgetter(1))[0]
+                    dominant_label = max(
+                        Q.items(), key=operator.itemgetter(1))[0]
                     prev_label = label_dict[vertex]
                     # If a dominant label was fund, match them together
                     # and update data structures

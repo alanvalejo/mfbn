@@ -64,24 +64,28 @@ class Coarsening:
         # Validation of list values
         for prop_name, prop_value in prop_defaults.items():
             if prop_name != 'threads' and len(getattr(self, prop_name)) == 1:
-                setattr(self, prop_name, [getattr(self, prop_name)[0]] * self.source_graph['layers'])
+                setattr(self, prop_name, [getattr(self, prop_name)[
+                        0]] * self.source_graph['layers'])
 
         # Parameters dimension validation
         for prop_name, prop_value in prop_defaults.items():
             if prop_name not in ['threads', 'projection']:
                 if self.source_graph['layers'] != len(getattr(self, prop_name)):
-                    print('Number of layers and ' + str(prop_name) + ' do not match.')
+                    print('Number of layers and ' +
+                          str(prop_name) + ' do not match.')
                     sys.exit(1)
 
         if self.threads > mp.cpu_count():
             print('Warning: Number of defined threads (' + str(self.threads) + ') '
-                  'cannot be greater than the real number of cors (' + str(mp.cpu_count()) + ').\n The number of '
+                  'cannot be greater than the real number of cors (' + str(
+                      mp.cpu_count()) + ').\n The number of '
                   'threads was setted as ' + str(mp.cpu_count()))
             self.threads = mp.cpu_count()
             sys.exit(1)
 
         # Matching method validation
-        valid_matching = ['rgmb', 'gmb', 'mlpb', 'hem', 'lem', 'rm', 'mnmf', 'msvm']
+        valid_matching = ['rgmb', 'gmb', 'mlpb',
+                          'hem', 'lem', 'rm', 'mnmf', 'msvm']
         for index, matching in enumerate(self.matching):
             matching = matching.lower()
             if matching not in valid_matching:
@@ -124,7 +128,8 @@ class Coarsening:
 
         self.projection = self.projection.lower()
         if self.projection not in valid_similarity:
-            print('Projection similarity ' + self.projection + ' misure is unvalid.')
+            print('Projection similarity ' +
+                  self.projection + ' misure is unvalid.')
             sys.exit(1)
 
         for layer in range(self.source_graph['layers']):
@@ -151,7 +156,7 @@ class Coarsening:
             contract = False
 
             args = []
-            for layer in range(graph['layers']):
+            for layer in range(graph['layers']):  # TODO: so fazer na layer 0
 
                 do_matching = True
                 if self.gmv[layer] is None and level[layer] >= self.max_levels[layer]:
@@ -164,7 +169,8 @@ class Coarsening:
                     contract = True
                     level[layer] += 1
 
-                    kwargs = dict(reduction_factor=self.reduction_factor[layer])
+                    kwargs = dict(
+                        reduction_factor=self.reduction_factor[layer])
 
                     kwargs['gmv'] = self.gmv[layer]
                     if self.matching[layer] in ['mlpb', 'gmb', 'rgmb']:
@@ -179,23 +185,28 @@ class Coarsening:
                         kwargs['itr'] = self.itr[layer]
 
                     if self.matching[layer] in ['hem', 'lem', 'rm', 'mnmf', 'msvm']:
-                        graph['projection'] = getattr(Similarity(graph, graph['adjlist']), self.projection)
-                        one_mode_graph = graph.weighted_one_mode_projection(graph['vertices_by_type'][layer], similarity=self.similarity[layer])
-                        matching_function = getattr(one_mode_graph, self.matching[layer])
+                        graph['projection'] = getattr(Similarity(
+                            graph, graph['adjlist']), self.projection)
+                        one_mode_graph = graph.weighted_one_mode_projection(
+                            graph['vertices_by_type'][layer], similarity=self.similarity[layer])
+                        matching_function = getattr(
+                            one_mode_graph, self.matching[layer])
                     else:
-                        graph['similarity'] = getattr(Similarity(graph, graph['adjlist']), self.similarity[layer])
-                        matching_function = getattr(graph, self.matching[layer])
+                        graph['similarity'] = getattr(Similarity(
+                            graph, graph['adjlist']), self.similarity[layer])
+                        matching_function = getattr(
+                            graph, self.matching[layer])
 
                     # Create a args for the engine multiprocessing.pool
                     args.append([(matching_function, kwargs)])
 
             if contract:
-
                 # Create pools
                 pool = mp.Pool(processes=self.threads)
                 processes = []
                 for arg in args:
-                    processes.append(pool.starmap_async(modified_starmap_async, arg))
+                    processes.append(pool.starmap_async(
+                        modified_starmap_async, arg))
 
                 # Merge chunked solutions
                 matching = numpy.arange(graph.vcount())
